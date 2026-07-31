@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+}
+
+/* Ant Design table/card polish that plays nicely with Tailwind resets */
+.ant-layout {
+  background: #f4f6f8;
+}
