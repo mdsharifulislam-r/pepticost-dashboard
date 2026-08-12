@@ -86,7 +86,7 @@ export interface PeptidePayload {
 
 // ---------- Vendor ----------
 export type VendorQuality = "Premium" | "Standard" | "Economy" | string;
-export type VendorStatus = "active" | "inactive" | string;
+export type VendorStatus = "active" | "delete";
 export type VendorPaymentMethod =
   | "Credit/Debit Card"
   | "Paypal"
@@ -104,10 +104,10 @@ export interface Vendor {
   about: string;
   price_per_unit: number;
   peptide: string | Peptide;
-  total_price?: number;
+  total_price: number;
   unit: number;
-  quality: VendorQuality;
-  has_discount: boolean;
+  quality?: VendorQuality;
+  has_discount?: boolean;
   discount_amount?: number;
   is_stock?: boolean;
   delivery_cost?: number;
@@ -123,25 +123,23 @@ export interface Vendor {
 
 export interface VendorPayload {
   name: string;
-  is_verified?: boolean;
-  rating?: number;
-  total_reviews?: number;
-  about?: string;
+  is_verified: boolean;
+  rating: number;
+  total_reviews: number;
+  about: string;
   price_per_unit: number;
   peptide: string;
-  total_price?: number;
   unit: number;
   quality?: VendorQuality;
   has_discount?: boolean;
   discount_amount?: number;
   is_stock?: boolean;
   delivery_cost?: number;
-  payment_methods?: VendorPaymentMethod[];
+  payment_methods: VendorPaymentMethod[];
   coupon_code?: string;
-  website_url?: string;
-  discounted_price?: number;
+  website_url: string;
   peptide_amount?: number;
-  status?: VendorStatus;
+  status: VendorStatus;
 }
 
 // ---------- FAQ ----------

@@ -142,8 +142,8 @@ export default function VendorsPage() {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: (v: string) => (
-        <Tag color={v === "active" ? "green" : "default"}>{v}</Tag>
+      render: (v: Vendor["status"]) => (
+        <Tag color={v === "active" ? "green" : "red"}>{v}</Tag>
       ),
     },
     {

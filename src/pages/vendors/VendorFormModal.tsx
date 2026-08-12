@@ -24,7 +24,7 @@ interface VendorFormModalProps {
 }
 
 const qualityOptions = ["Premium", "Standard", "Economy"];
-const statusOptions = ["active", "inactive"];
+const statusOptions = ["active", "delete"] as const;
 const paymentMethodOptions = [
   "Credit/Debit Card",
   "Paypal",
@@ -46,10 +46,25 @@ export default function VendorFormModal({ open, onClose, editing }: VendorFormMo
     if (!open) return;
     if (editing) {
       form.setFieldsValue({
-        ...editing,
+        name: editing.name,
+        is_verified: editing.is_verified,
+        rating: editing.rating,
+        total_reviews: editing.total_reviews,
+        about: editing.about,
+        price_per_unit: editing.price_per_unit,
         peptide:
           typeof editing.peptide === "string" ? editing.peptide : editing.peptide._id,
+        unit: editing.unit,
+        quality: editing.quality,
+        has_discount: editing.has_discount,
+        discount_amount: editing.discount_amount,
+        is_stock: editing.is_stock,
+        delivery_cost: editing.delivery_cost,
         payment_methods: editing.payment_methods ?? [],
+        coupon_code: editing.coupon_code,
+        website_url: editing.website_url,
+        peptide_amount: editing.peptide_amount,
+        status: editing.status,
       });
     } else {
       form.resetFields();
@@ -60,6 +75,8 @@ export default function VendorFormModal({ open, onClose, editing }: VendorFormMo
         status: "active",
         quality: "Standard",
         payment_methods: [],
+        rating: 0,
+        total_reviews: 0,
       });
     }
   }, [open, editing, form]);
@@ -162,14 +179,27 @@ export default function VendorFormModal({ open, onClose, editing }: VendorFormMo
         </Row>
 
         <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item label="Total price" name="total_price">
-              <InputNumber min={0} prefix="$" className="w-full!" />
+          <Col span={8}>
+            <Form.Item
+              label="Rating"
+              name="rating"
+              rules={[{ required: true, message: "Required" }]}
+            >
+              <InputNumber min={0} max={5} step={0.1} className="w-full!" />
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item label="Rating" name="rating">
-              <InputNumber min={0} max={5} step={0.1} className="w-full!" />
+          <Col span={8}>
+            <Form.Item
+              label="Total reviews"
+              name="total_reviews"
+              rules={[{ required: true, message: "Required" }]}
+            >
+              <InputNumber min={0} className="w-full!" />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item label="Delivery cost" name="delivery_cost">
+              <InputNumber min={0} prefix="$" className="w-full!" />
             </Form.Item>
           </Col>
         </Row>
@@ -186,8 +216,8 @@ export default function VendorFormModal({ open, onClose, editing }: VendorFormMo
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item label="Discounted price" name="discounted_price">
-              <InputNumber min={0} prefix="$" disabled={!hasDiscount} className="w-full!" />
+            <Form.Item label="Coupon code" name="coupon_code">
+              <Input placeholder="e.g. SAVE25" disabled={!hasDiscount} />
             </Form.Item>
           </Col>
         </Row>
@@ -199,18 +229,21 @@ export default function VendorFormModal({ open, onClose, editing }: VendorFormMo
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item label="Delivery cost" name="delivery_cost">
-              <InputNumber min={0} prefix="$" className="w-full!" />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item label="Status" name="status">
+            <Form.Item
+              label="Status"
+              name="status"
+              rules={[{ required: true, message: "Required" }]}
+            >
               <Select options={statusOptions.map((s) => ({ value: s, label: s }))} />
             </Form.Item>
           </Col>
         </Row>
 
-        <Form.Item label="Payment methods" name="payment_methods">
+        <Form.Item
+          label="Payment methods"
+          name="payment_methods"
+          rules={[{ required: true, message: "Select at least one payment method" }]}
+        >
           <Select
             mode="multiple"
             placeholder="Select accepted payment methods"
@@ -221,19 +254,19 @@ export default function VendorFormModal({ open, onClose, editing }: VendorFormMo
           />
         </Form.Item>
 
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item label="Coupon code" name="coupon_code">
-              <Input placeholder="e.g. SAVE25" disabled={!hasDiscount} />
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Form.Item label="Website URL" name="website_url">
+        <Form.Item
+          label="Website URL"
+          name="website_url"
+          rules={[{ required: true, message: "Please enter a website URL" }]}
+        >
           <Input placeholder="https://example.com" />
         </Form.Item>
 
-        <Form.Item label="About" name="about">
+        <Form.Item
+          label="About"
+          name="about"
+          rules={[{ required: true, message: "Please enter a description" }]}
+        >
           <Input.TextArea rows={3} placeholder="Short description of this listing" />
         </Form.Item>
       </Form>
