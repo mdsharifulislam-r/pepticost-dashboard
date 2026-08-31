@@ -256,3 +256,26 @@ export interface Application {
 export interface ApplicationStatusPayload {
   status: Exclude<ApplicationStatus, "pending">;
 }
+
+// ---------- Admin Dashboard Stats & Graph ----------
+export interface AdminStats {
+  vendors: number;
+  supportMessages: number;
+  blogs: number;
+  applications: number;
+}
+
+export interface YearWiseCount {
+  year: number;
+  count: number;
+}
+
+export interface MonthlyBreakdownCount {
+  month: string;
+  count: number;
+}
+
+export interface ApplicationGraphData {
+  yearWise: YearWiseCount[];
+  monthlyBreakdown: MonthlyBreakdownCount[];
+}
