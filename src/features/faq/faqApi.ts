@@ -3,7 +3,7 @@ import type { ApiResponse, Faq, FaqPayload, QueryParams } from "@/types";
 
 export const faqApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getFaqs: builder.query<ApiResponse<Faq[]>, QueryParams | void>({
+    getFaqs: builder.query<ApiResponse<Faq[]>, QueryParams>({
       query: (params) => ({
         url: "/faq",
         params: params ?? undefined,

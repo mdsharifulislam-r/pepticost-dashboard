@@ -3,7 +3,7 @@ import type { ApiResponse, Peptide, PeptidePayload, QueryParams } from "@/types"
 
 export const peptidesApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getPeptides: builder.query<ApiResponse<Peptide[]>, QueryParams | void>({
+    getPeptides: builder.query<ApiResponse<Peptide[]>, QueryParams>({
       query: (params) => ({
         url: "/peptides",
         params: params ?? undefined,

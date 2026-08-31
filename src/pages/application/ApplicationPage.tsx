@@ -62,12 +62,14 @@ const statusOptions: {
 
 export default function ApplicationPage() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [page, setPage] = useState<number>(1);
   const [statusFilter, setStatusFilter] = useState<
     ApplicationStatus | undefined
   >();
   const { data, isFetching } = useGetApplicationsQuery({
     searchTerm: searchTerm || undefined,
     status: statusFilter,
+    page,
   });
   const [updateStatus] = useUpdateApplicationStatusMutation();
   const { message } = AntApp.useApp();
@@ -256,7 +258,12 @@ export default function ApplicationPage() {
         loading={isFetching}
         dataSource={data?.data ?? []}
         columns={columns}
-        pagination={{ pageSize: 10, showSizeChanger: false }}
+        pagination={{
+          pageSize: data?.pagination?.limit,
+          total: data?.pagination?.total,
+          current: data?.pagination?.page,
+          onChange: (p) => setPage(p),
+        }}
         className="overflow-hidden rounded-xl bg-white shadow-sm border border-slate-100"
         scroll={{ x: "max-content" }}
       />

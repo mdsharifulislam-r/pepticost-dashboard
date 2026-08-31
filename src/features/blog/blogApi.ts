@@ -3,7 +3,7 @@ import type { ApiResponse, Blog, QueryParams } from "@/types";
 
 export const blogApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getBlogs: builder.query<ApiResponse<Blog[]>, QueryParams | void>({
+    getBlogs: builder.query<ApiResponse<Blog[]>, QueryParams>({
       query: (params) => ({
         url: "/blog",
         params: params ?? undefined,

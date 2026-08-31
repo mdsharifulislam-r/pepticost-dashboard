@@ -3,7 +3,7 @@ import type { ApiResponse, Support, SupportReplyPayload, QueryParams } from "@/t
 
 export const supportApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getSupportMessages: builder.query<ApiResponse<Support[]>, QueryParams | void>({
+    getSupportMessages: builder.query<ApiResponse<Support[]>, QueryParams>({
       query: (params) => ({
         url: "/support",
         params: params ?? undefined,

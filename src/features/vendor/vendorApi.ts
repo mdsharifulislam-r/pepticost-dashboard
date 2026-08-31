@@ -3,7 +3,7 @@ import type { ApiResponse, QueryParams, Vendor, VendorPayload } from "@/types";
 
 export const vendorApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getVendors: builder.query<ApiResponse<Vendor[]>, QueryParams | void>({
+    getVendors: builder.query<ApiResponse<Vendor[]>, QueryParams>({
       query: (params) => ({
         url: "/vendor",
         params: params ?? undefined,
@@ -11,9 +11,9 @@ export const vendorApi = baseApi.injectEndpoints({
       providesTags: (result) =>
         result
           ? [
-              ...result.data.map((v) => ({ type: "Vendor" as const, id: v._id })),
-              { type: "Vendor" as const, id: "LIST" },
-            ]
+            ...result.data.map((v) => ({ type: "Vendor" as const, id: v._id })),
+            { type: "Vendor" as const, id: "LIST" },
+          ]
           : [{ type: "Vendor" as const, id: "LIST" }],
     }),
     createVendor: builder.mutation<ApiResponse<Vendor>, VendorPayload>({

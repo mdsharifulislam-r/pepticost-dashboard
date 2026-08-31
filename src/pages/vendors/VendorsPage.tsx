@@ -21,18 +21,23 @@ import {
 import type { ColumnsType } from "antd/es/table";
 import PageHeader from "@/components/common/PageHeader";
 import { useGetPeptidesQuery } from "@/features/peptides/peptidesApi";
-import { useGetVendorsQuery, useDeleteVendorMutation } from "@/features/vendor/vendorApi";
+import {
+  useGetVendorsQuery,
+  useDeleteVendorMutation,
+} from "@/features/vendor/vendorApi";
 import type { Vendor } from "@/types";
 import VendorFormModal from "@/pages/vendors/VendorFormModal";
 import BulkUploadModal from "@/pages/vendors/BulkUploadModal";
 
 export default function VendorsPage() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [page, setPage] = useState<number>(1);
   const [peptideFilter, setPeptideFilter] = useState<string | undefined>();
-  const { data: peptides } = useGetPeptidesQuery();
+  const { data: peptides } = useGetPeptidesQuery({});
   const { data, isFetching } = useGetVendorsQuery({
     searchTerm: searchTerm || undefined,
     peptide: peptideFilter,
+    page,
   });
   const [deleteVendor] = useDeleteVendorMutation();
   const { message } = AntApp.useApp();
@@ -81,7 +86,7 @@ export default function VendorsPage() {
       dataIndex: "peptide",
       key: "peptide",
       render: (peptide: Vendor["peptide"]) =>
-        typeof peptide === "string" ? peptide : peptide?.name ?? "—",
+        typeof peptide === "string" ? peptide : (peptide?.name ?? "—"),
     },
     {
       title: "Price",
@@ -92,7 +97,8 @@ export default function VendorsPage() {
           <span>${v?.toFixed(2)}</span>
           {record.has_discount && (
             <Tag color="gold" className="!m-0 w-fit">
-              -{record.discount_amount}% {record.coupon_code ? `· ${record.coupon_code}` : ""}
+              -{record.discount_amount}%{" "}
+              {record.coupon_code ? `· ${record.coupon_code}` : ""}
             </Tag>
           )}
         </Space>
@@ -136,7 +142,9 @@ export default function VendorsPage() {
       title: "Rating",
       dataIndex: "rating",
       key: "rating",
-      render: (v: number) => <Rate disabled allowHalf defaultValue={v} className="!text-sm" />,
+      render: (v: number) => (
+        <Rate disabled allowHalf defaultValue={v} className="!text-sm" />
+      ),
     },
     {
       title: "Status",
@@ -152,7 +160,11 @@ export default function VendorsPage() {
       width: 120,
       render: (_, record) => (
         <Space>
-          <Button size="small" icon={<EditOutlined />} onClick={() => openEdit(record)} />
+          <Button
+            size="small"
+            icon={<EditOutlined />}
+            onClick={() => openEdit(record)}
+          />
           <Popconfirm
             title="Delete this listing?"
             description="This can't be undone."
@@ -180,7 +192,10 @@ export default function VendorsPage() {
               className="!w-48"
               value={peptideFilter}
               onChange={setPeptideFilter}
-              options={peptides?.data.map((p) => ({ value: p._id, label: p.name }))}
+              options={peptides?.data.map((p) => ({
+                value: p._id,
+                label: p.name,
+              }))}
             />
             <Input
               placeholder="Search vendors"
@@ -204,12 +219,21 @@ export default function VendorsPage() {
         loading={isFetching}
         dataSource={data?.data ?? []}
         columns={columns}
-        pagination={{ pageSize: 10, showSizeChanger: false }}
+        pagination={{
+          pageSize: data?.pagination?.limit,
+          total: data?.pagination?.total,
+          current: data?.pagination?.page,
+          onChange: (page) => setPage(page),
+        }}
         className="overflow-hidden rounded-xl bg-white shadow-sm"
         scroll={{ x: 1200 }}
       />
 
-      <VendorFormModal open={modalOpen} onClose={() => setModalOpen(false)} editing={editing} />
+      <VendorFormModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        editing={editing}
+      />
       <BulkUploadModal open={bulkOpen} onClose={() => setBulkOpen(false)} />
     </div>
   );

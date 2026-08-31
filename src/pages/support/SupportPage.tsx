@@ -24,8 +24,10 @@ const statusColors: Record<SupportStatus, string> = {
 
 export default function SupportPage() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [page, setPage] = useState<number>(1);
   const { data, isFetching } = useGetSupportMessagesQuery({
     searchTerm: searchTerm || undefined,
+    page,
   });
   const [deleteSupportMessage] = useDeleteSupportMessageMutation();
   const { message } = AntApp.useApp();
@@ -131,7 +133,7 @@ export default function SupportPage() {
             prefix={<SearchOutlined className="text-slate-400" />}
             onChange={(e) => setSearchTerm(e.target.value)}
             allowClear
-            className="!w-56"
+            className="w-56!"
           />
         }
       />
@@ -141,7 +143,12 @@ export default function SupportPage() {
         loading={isFetching}
         dataSource={data?.data ?? []}
         columns={columns}
-        pagination={{ pageSize: 10, showSizeChanger: false }}
+        pagination={{
+          pageSize: data?.pagination?.limit,
+          total: data?.pagination?.total,
+          current: data?.pagination?.page,
+          onChange: (p) => setPage(p),
+        }}
         className="overflow-hidden rounded-xl bg-white shadow-sm"
       />
 

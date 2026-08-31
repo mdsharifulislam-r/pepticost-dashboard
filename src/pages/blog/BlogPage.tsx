@@ -16,7 +16,8 @@ import { getImageUrl } from "@/api/baseApi";
 
 export default function BlogPage() {
   const [searchTerm, setSearchTerm] = useState("");
-  const { data, isFetching } = useGetBlogsQuery({ searchTerm: searchTerm || undefined });
+  const [page, setPage] = useState<number>(1);
+  const { data, isFetching } = useGetBlogsQuery({ searchTerm: searchTerm || undefined, page });
   const [deleteBlog] = useDeleteBlogMutation();
   const { message } = AntApp.useApp();
 
@@ -111,7 +112,7 @@ export default function BlogPage() {
               prefix={<SearchOutlined className="text-slate-400" />}
               onChange={(e) => setSearchTerm(e.target.value)}
               allowClear
-              className="!w-56"
+              className="w-56!"
             />
             <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>
               New post
@@ -125,7 +126,12 @@ export default function BlogPage() {
         loading={isFetching}
         dataSource={data?.data ?? []}
         columns={columns}
-        pagination={{ pageSize: 10, showSizeChanger: false }}
+        pagination={{
+          pageSize: data?.pagination?.limit,
+          total: data?.pagination?.total,
+          current: data?.pagination?.page,
+          onChange: (p) => setPage(p),
+        }}
         className="overflow-hidden rounded-xl bg-white shadow-sm"
       />
 

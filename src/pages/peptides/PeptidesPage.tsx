@@ -13,7 +13,8 @@ import type { Peptide, PeptidePayload } from "@/types";
 
 export default function PeptidesPage() {
   const [searchTerm, setSearchTerm] = useState("");
-  const { data, isFetching } = useGetPeptidesQuery({ searchTerm: searchTerm || undefined });
+  const [page, setPage] = useState<number>(1);
+  const { data, isFetching } = useGetPeptidesQuery({ searchTerm: searchTerm || undefined, page });
   const [createPeptide, { isLoading: creating }] = useCreatePeptideMutation();
   const [updatePeptide, { isLoading: updating }] = useUpdatePeptideMutation();
   const [deletePeptide] = useDeletePeptideMutation();
@@ -102,7 +103,7 @@ export default function PeptidesPage() {
               prefix={<SearchOutlined className="text-slate-400" />}
               onChange={(e) => setSearchTerm(e.target.value)}
               allowClear
-              className="!w-56"
+              className="w-56!"
             />
             <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>
               Add peptide
@@ -116,7 +117,12 @@ export default function PeptidesPage() {
         loading={isFetching}
         dataSource={data?.data ?? []}
         columns={columns}
-        pagination={{ pageSize: 10, showSizeChanger: false }}
+        pagination={{
+          pageSize: data?.pagination?.limit,
+          total: data?.pagination?.total,
+          current: data?.pagination?.page,
+          onChange: (p) => setPage(p),
+        }}
         className="overflow-hidden rounded-xl bg-white shadow-sm"
       />
 

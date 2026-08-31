@@ -13,7 +13,8 @@ import type { Faq, FaqPayload } from "@/types";
 
 export default function FaqPage() {
   const [searchTerm, setSearchTerm] = useState("");
-  const { data, isFetching } = useGetFaqsQuery({ searchTerm: searchTerm || undefined });
+  const [page, setPage] = useState<number>(1);
+  const { data, isFetching } = useGetFaqsQuery({ searchTerm: searchTerm || undefined, page });
   const [createFaq, { isLoading: creating }] = useCreateFaqMutation();
   const [updateFaq, { isLoading: updating }] = useUpdateFaqMutation();
   const [deleteFaq] = useDeleteFaqMutation();
@@ -103,7 +104,7 @@ export default function FaqPage() {
               prefix={<SearchOutlined className="text-slate-400" />}
               onChange={(e) => setSearchTerm(e.target.value)}
               allowClear
-              className="!w-56"
+              className="w-56!"
             />
             <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>
               Add FAQ
@@ -117,7 +118,12 @@ export default function FaqPage() {
         loading={isFetching}
         dataSource={data?.data ?? []}
         columns={columns}
-        pagination={{ pageSize: 10, showSizeChanger: false }}
+        pagination={{
+          pageSize: data?.pagination?.limit,
+          total: data?.pagination?.total,
+          current: data?.pagination?.page,
+          onChange: (p) => setPage(p),
+        }}
         className="overflow-hidden rounded-xl bg-white shadow-sm"
       />
 

@@ -3,7 +3,7 @@ import type { ApiResponse, Banner, QueryParams } from "@/types";
 
 export const bannerApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getBanners: builder.query<ApiResponse<Banner[]>, QueryParams | void>({
+    getBanners: builder.query<ApiResponse<Banner[]>, QueryParams>({
       query: (params) => ({
         url: "/banner",
         params: params ?? undefined,

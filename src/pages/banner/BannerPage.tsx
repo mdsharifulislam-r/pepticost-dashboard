@@ -16,7 +16,8 @@ import { getImageUrl } from "@/api/baseApi";
 
 export default function BannerPage() {
   const [searchTerm, setSearchTerm] = useState("");
-  const { data, isFetching } = useGetBannersQuery({ searchTerm: searchTerm || undefined });
+  const [page, setPage] = useState<number>(1);
+  const { data, isFetching } = useGetBannersQuery({ searchTerm: searchTerm || undefined, page });
   const [deleteBanner] = useDeleteBannerMutation();
   const { message } = AntApp.useApp();
 
@@ -131,7 +132,12 @@ export default function BannerPage() {
         loading={isFetching}
         dataSource={data?.data ?? []}
         columns={columns}
-        pagination={{ pageSize: 10, showSizeChanger: false }}
+        pagination={{
+          pageSize: data?.pagination?.limit,
+          total: data?.pagination?.total,
+          current: data?.pagination?.page,
+          onChange: (p) => setPage(p),
+        }}
         className="overflow-hidden rounded-xl bg-white shadow-sm"
       />
 
