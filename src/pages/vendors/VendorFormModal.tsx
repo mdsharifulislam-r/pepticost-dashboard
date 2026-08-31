@@ -34,9 +34,13 @@ const paymentMethodOptions = [
   "Google Pay",
 ] as const;
 
-export default function VendorFormModal({ open, onClose, editing }: VendorFormModalProps) {
+export default function VendorFormModal({
+  open,
+  onClose,
+  editing,
+}: VendorFormModalProps) {
   const [form] = Form.useForm<VendorPayload>();
-  const { data: peptides } = useGetPeptidesQuery();
+  const { data: peptides } = useGetPeptidesQuery({});
   const [createVendor, { isLoading: creating }] = useCreateVendorMutation();
   const [updateVendor, { isLoading: updating }] = useUpdateVendorMutation();
   const { message } = AntApp.useApp();
@@ -53,7 +57,9 @@ export default function VendorFormModal({ open, onClose, editing }: VendorFormMo
         about: editing.about,
         price_per_unit: editing.price_per_unit,
         peptide:
-          typeof editing.peptide === "string" ? editing.peptide : editing.peptide._id,
+          typeof editing.peptide === "string"
+            ? editing.peptide
+            : editing.peptide._id,
         unit: editing.unit,
         quality: editing.quality,
         has_discount: editing.has_discount,
@@ -93,7 +99,8 @@ export default function VendorFormModal({ open, onClose, editing }: VendorFormMo
       onClose();
     } catch (err) {
       const description =
-        (err as { data?: { message?: string } })?.data?.message ?? "Something went wrong";
+        (err as { data?: { message?: string } })?.data?.message ??
+        "Something went wrong";
       message.error(description);
     }
   };
@@ -121,7 +128,11 @@ export default function VendorFormModal({ open, onClose, editing }: VendorFormMo
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item label="Verified vendor" name="is_verified" valuePropName="checked">
+            <Form.Item
+              label="Verified vendor"
+              name="is_verified"
+              valuePropName="checked"
+            >
               <Switch />
             </Form.Item>
           </Col>
@@ -138,7 +149,10 @@ export default function VendorFormModal({ open, onClose, editing }: VendorFormMo
                 placeholder="Select peptide"
                 showSearch
                 optionFilterProp="label"
-                options={peptides?.data.map((p) => ({ value: p._id, label: p.name }))}
+                options={peptides?.data.map((p) => ({
+                  value: p._id,
+                  label: p.name,
+                }))}
               />
             </Form.Item>
           </Col>
@@ -206,13 +220,22 @@ export default function VendorFormModal({ open, onClose, editing }: VendorFormMo
 
         <Row gutter={16}>
           <Col span={8}>
-            <Form.Item label="Has discount" name="has_discount" valuePropName="checked">
+            <Form.Item
+              label="Has discount"
+              name="has_discount"
+              valuePropName="checked"
+            >
               <Switch />
             </Form.Item>
           </Col>
           <Col span={8}>
             <Form.Item label="Discount amount (%)" name="discount_amount">
-              <InputNumber min={0} max={100} disabled={!hasDiscount} className="w-full!" />
+              <InputNumber
+                min={0}
+                max={100}
+                disabled={!hasDiscount}
+                className="w-full!"
+              />
             </Form.Item>
           </Col>
           <Col span={8}>
@@ -234,7 +257,9 @@ export default function VendorFormModal({ open, onClose, editing }: VendorFormMo
               name="status"
               rules={[{ required: true, message: "Required" }]}
             >
-              <Select options={statusOptions.map((s) => ({ value: s, label: s }))} />
+              <Select
+                options={statusOptions.map((s) => ({ value: s, label: s }))}
+              />
             </Form.Item>
           </Col>
         </Row>
@@ -242,7 +267,9 @@ export default function VendorFormModal({ open, onClose, editing }: VendorFormMo
         <Form.Item
           label="Payment methods"
           name="payment_methods"
-          rules={[{ required: true, message: "Select at least one payment method" }]}
+          rules={[
+            { required: true, message: "Select at least one payment method" },
+          ]}
         >
           <Select
             mode="multiple"
@@ -267,7 +294,10 @@ export default function VendorFormModal({ open, onClose, editing }: VendorFormMo
           name="about"
           rules={[{ required: true, message: "Please enter a description" }]}
         >
-          <Input.TextArea rows={3} placeholder="Short description of this listing" />
+          <Input.TextArea
+            rows={3}
+            placeholder="Short description of this listing"
+          />
         </Form.Item>
       </Form>
     </Modal>
