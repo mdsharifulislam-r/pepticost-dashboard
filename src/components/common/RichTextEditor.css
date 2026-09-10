@@ -1,0 +1,113 @@
+.rich-text-editor {
+  --editor-border: #e2e8f0;
+  --editor-focus: #0d9488;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.rich-text-editor .jodit-container {
+  border: 1px solid var(--editor-border) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rich-text-editor .jodit-container:not(.jodit_disabled):focus-within,
+.rich-text-editor .jodit-container.jodit_focused {
+  border-color: var(--editor-focus) !important;
+  box-shadow: 0 0 0 3px rgb(13 148 136 / 12%);
+}
+
+.rich-text-editor .jodit-toolbar__box {
+  background: #f8fafc !important;
+  border-bottom: 1px solid var(--editor-border) !important;
+}
+
+.rich-text-editor .jodit-toolbar-editor-collection {
+  gap: 2px;
+}
+
+.rich-text-editor .jodit-workplace {
+  background: #fff;
+}
+
+.rich-text-editor .jodit-wysiwyg {
+  padding: 18px 20px !important;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #334155;
+}
+
+.rich-text-editor .jodit-wysiwyg h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.rich-text-editor .jodit-wysiwyg h2 {
+  font-size: 1.375rem;
+  font-weight: 600;
+  margin-bottom: 0.625rem;
+}
+
+.rich-text-editor .jodit-wysiwyg h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.rich-text-editor .jodit-wysiwyg blockquote {
+  border-left: 4px solid #99f6e4;
+  background: #f0fdfa;
+  padding: 12px 16px;
+  margin: 12px 0;
+  color: #0f766e;
+  border-radius: 0 8px 8px 0;
+}
+
+.rich-text-editor .jodit-wysiwyg a {
+  color: var(--editor-focus);
+}
+
+.rich-text-editor .jodit-wysiwyg table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 12px 0;
+}
+
+.rich-text-editor .jodit-wysiwyg table td,
+.rich-text-editor .jodit-wysiwyg table th {
+  border: 1px solid #cbd5e1;
+  padding: 8px 12px;
+}
+
+.rich-text-editor .jodit-wysiwyg img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.rich-text-editor .jodit-status-bar {
+  background: #f8fafc !important;
+  border-top: 1px solid var(--editor-border) !important;
+  color: #64748b !important;
+  font-size: 12px;
+}
+
+.rich-text-editor .jodit-toolbar-button__trigger:hover:not([disabled]),
+.rich-text-editor .jodit-toolbar-button__button:hover:not([disabled]) {
+  background: #ecfdf5 !important;
+}
+
+.rich-text-editor .jodit-toolbar-button__trigger:active:not([disabled]),
+.rich-text-editor .jodit-toolbar-button__button:active:not([disabled]),
+.rich-text-editor .jodit-toolbar-button__trigger[aria-pressed="true"],
+.rich-text-editor .jodit-toolbar-button__button[aria-pressed="true"] {
+  background: #ccfbf1 !important;
+}
+
+.rich-text-editor--disabled {
+  opacity: 0.65;
+  pointer-events: none;
+}

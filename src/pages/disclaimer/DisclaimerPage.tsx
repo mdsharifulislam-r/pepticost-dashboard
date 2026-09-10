@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Tabs, Form, Input, Button, App as AntApp, Typography } from "antd";
+import { Tabs, Form, Button, App as AntApp, Typography, Skeleton } from "antd";
 import { SaveOutlined } from "@ant-design/icons";
 import PageHeader from "@/components/common/PageHeader";
+import RichTextEditor, { isRichTextEmpty } from "@/components/common/RichTextEditor";
 import { useGetDisclaimerQuery, useUpsertDisclaimerMutation } from "@/features/disclaimer/disclaimerApi";
 import type { DisclaimerType } from "@/types";
 
 const { Text } = Typography;
-const { TextArea } = Input;
 
 const tabs: { key: DisclaimerType; label: string }[] = [
   { key: "terms", label: "Terms of Service" },
@@ -41,12 +41,26 @@ function DisclaimerEditor({ type }: { type: DisclaimerType }) {
         This content is shown publicly on the site's {type} page.
       </Text>
       <Form form={form} layout="vertical" onFinish={onFinish}>
-        <Form.Item
-          name="content"
-          rules={[{ required: true, message: "Please write some content" }]}
-        >
-          <TextArea rows={14} disabled={isFetching} placeholder="Write the page content here…" />
-        </Form.Item>
+        {isFetching ? (
+          <Skeleton active paragraph={{ rows: 12 }} className="mb-4" />
+        ) : (
+          <Form.Item
+            name="content"
+            rules={[
+              {
+                validator: (_, value) =>
+                  isRichTextEmpty(value)
+                    ? Promise.reject(new Error("Please write some content"))
+                    : Promise.resolve(),
+              },
+            ]}
+          >
+            <RichTextEditor
+              placeholder="Write the page content here…"
+              minHeight={420}
+            />
+          </Form.Item>
+        )}
         <Button type="primary" htmlType="submit" icon={<SaveOutlined />} loading={saving}>
           Save changes
         </Button>
