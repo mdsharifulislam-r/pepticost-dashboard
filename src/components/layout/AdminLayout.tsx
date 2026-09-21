@@ -93,7 +93,7 @@ export default function AdminLayout() {
           </div>
           {!collapsed && (
             <span className="text-base font-semibold tracking-wide text-white">
-              Pepticost
+              Pepticenter
             </span>
           )}
         </div>

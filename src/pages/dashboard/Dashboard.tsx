@@ -146,7 +146,7 @@ export default function Dashboard() {
     <div className="space-y-6">
       <PageHeader
         title={`Welcome back${name ? `, ${name}` : ""}`}
-        subtitle="Here's a snapshot of what's live on Pepticost right now."
+        subtitle="Here's a snapshot of what's live on Pepticenter right now."
         extra={
           (statsError || graphError) && (
             <Button
