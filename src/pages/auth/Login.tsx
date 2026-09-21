@@ -45,7 +45,7 @@ export default function Login() {
           <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-teal-600 text-lg font-bold text-white">
             PC
           </div>
-          <Title level={3} className="!mb-1">
+          <Title level={3} className="mb-1!">
             Pepticost Admin
           </Title>
           <Text type="secondary">Sign in to manage your catalog and content</Text>

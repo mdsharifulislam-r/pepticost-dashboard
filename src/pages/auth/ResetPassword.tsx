@@ -47,7 +47,7 @@ export default function ResetPassword() {
     <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4">
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
-          <Title level={3} className="!mb-1">
+          <Title level={3} className="mb-1!">
             Reset password
           </Title>
           <Text type="secondary">
