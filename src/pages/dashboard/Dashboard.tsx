@@ -39,7 +39,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
         <p className="text-xs font-semibold text-slate-500">{label}</p>
         <p className="mt-1 text-sm font-bold text-slate-800">
           Applications:{" "}
-          <span className="text-indigo-600">{payload[0].value}</span>
+          <span className="text-blue-600">{payload[0].value}</span>
         </p>
       </div>
     );
@@ -270,8 +270,8 @@ export default function Dashboard() {
                       x2="0"
                       y2="1"
                     >
-                      <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.3} />
-                      <stop offset="95%" stopColor="#4f46e5" stopOpacity={0} />
+                      <stop offset="5%" stopColor="#2b6cf6" stopOpacity={0.32} />
+                      <stop offset="95%" stopColor="#2b6cf6" stopOpacity={0} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid
@@ -299,7 +299,7 @@ export default function Dashboard() {
                   <Area
                     type="monotone"
                     dataKey="count"
-                    stroke="#4f46e5"
+                    stroke="#2b6cf6"
                     strokeWidth={2.5}
                     fillOpacity={1}
                     fill="url(#monthlyAreaGrad)"

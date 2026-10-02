@@ -183,6 +183,32 @@ export interface BlogPayload {
   image?: File;
 }
 
+// ---------- Peptide Info ----------
+export type PeptideInfoStatus = "active" | "inactive" | "delete";
+
+export interface PeptideInfo {
+  _id: string;
+  headline: string;
+  content: string;
+  thumbnail?: string;
+  pdf?: string;
+  category: string;
+  tags: string[];
+  status: PeptideInfoStatus;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface PeptideInfoPayload {
+  headline: string;
+  content: string;
+  thumbnail?: File | string;
+  pdf?: File | string;
+  category: string;
+  tags: string[];
+  status?: PeptideInfoStatus;
+}
+
 // ---------- Disclaimer ----------
 export type DisclaimerType = "terms" | "privacy" | "about";
 

@@ -9,21 +9,47 @@ import "@/index.css";
 
 const theme = {
   token: {
-    colorPrimary: "#0F766E",
-    colorInfo: "#0F766E",
-    borderRadius: 8,
+    colorPrimary: "#2b6cf6",
+    colorInfo: "#2b6cf6",
+    colorSuccess: "#16a34a",
+    colorWarning: "#f59e0b",
+    colorError: "#ef4444",
+    borderRadius: 12,
     fontFamily:
       "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
   },
   components: {
     Layout: {
-      siderBg: "#0B1120",
+      siderBg: "#0f172a",
       headerBg: "#ffffff",
+      bodyBg: "#f5f7fb",
+      triggerBg: "#eff6ff",
+      triggerColor: "#2b6cf6",
     },
     Menu: {
-      darkItemBg: "#0B1120",
-      darkSubMenuItemBg: "#0B1120",
-      darkItemSelectedBg: "#0F766E",
+      darkItemBg: "#0f172a",
+      darkSubMenuItemBg: "#0f172a",
+      darkItemSelectedBg: "#2b6cf6",
+      darkItemSelectedColor: "#fff",
+      darkItemHoverBg: "rgba(43, 108, 246, 0.16)",
+      darkItemColor: "rgba(255,255,255,0.76)",
+    },
+    Button: {
+      borderRadius: 10,
+      controlHeight: 38,
+    },
+    Input: {
+      borderRadius: 10,
+    },
+    Select: {
+      borderRadius: 10,
+    },
+    Table: {
+      headerBg: "#f8fafc",
+      headerColor: "#475569",
+      rowHoverBg: "#fff7ed",
+      borderColor: "#e2e8f0",
+      colorBgContainer: "#ffffff",
     },
   },
 };

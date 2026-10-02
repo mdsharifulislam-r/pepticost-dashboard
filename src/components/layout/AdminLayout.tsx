@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Layout, Menu, Avatar, Dropdown, Typography, Grid } from "antd";
+import { Layout, Menu, Avatar, Dropdown, Typography, Grid, Button } from "antd";
 import type { MenuProps } from "antd";
 import {
   DashboardOutlined,
@@ -10,12 +10,14 @@ import {
   QuestionCircleOutlined,
   FileProtectOutlined,
   PictureOutlined,
+  BookOutlined,
   CustomerServiceOutlined,
   FormOutlined,
   UserOutlined,
   LogoutOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  BellOutlined,
 } from "@ant-design/icons";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { logout } from "@/features/auth/authSlice";
@@ -32,6 +34,7 @@ const navItems = [
   { key: "/faq", icon: <QuestionCircleOutlined />, label: "FAQ" },
   { key: "/disclaimer", icon: <FileProtectOutlined />, label: "Disclaimer" },
   { key: "/banner", icon: <PictureOutlined />, label: "Banners" },
+  { key: "/peptide-info", icon: <BookOutlined />, label: "Peptide Info" },
   { key: "/support", icon: <CustomerServiceOutlined />, label: "Support" },
   { key: "/applications", icon: <FormOutlined />, label: "Applications" },
 ];
@@ -76,7 +79,7 @@ export default function AdminLayout() {
   const isMobile = !screens.md;
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout style={{ minHeight: "100vh", background: "#f3f6fb" }}>
       <Sider
         theme="dark"
         collapsible
@@ -85,67 +88,111 @@ export default function AdminLayout() {
         trigger={null}
         breakpoint="md"
         collapsedWidth={isMobile ? 0 : 80}
-        style={{ background: "#0B1120" }}
+        width={240}
+        style={{
+          background: "#0f172a",
+          position: "sticky",
+          top: 0,
+          height: "100vh",
+          boxShadow: "18px 0 40px rgba(15, 23, 42, 0.08)",
+        }}
       >
-        <div className="flex h-16 items-center justify-center gap-2 px-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-teal-600 text-sm font-bold text-white">
-            PC
+        <div className="flex h-20 items-center justify-between gap-2 border-b border-white/10 px-4">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 text-sm font-bold text-white shadow-lg shadow-blue-500/30">
+              PC
+            </div>
+            {!collapsed && (
+              <div>
+                <div className="text-sm font-semibold tracking-[0.2em] text-blue-300 uppercase">
+                  Pepticanter
+                </div>
+                <div className="text-xs text-slate-300">Admin Panel</div>
+              </div>
+            )}
           </div>
-          {!collapsed && (
-            <span className="text-base font-semibold tracking-wide text-white">
-              Pepticenter
-            </span>
-          )}
         </div>
+
         <Menu
           theme="dark"
           mode="inline"
           selectedKeys={[selectedKey]}
           items={navItems}
           onClick={({ key }) => navigate(key)}
-          style={{ background: "#0B1120", borderInlineEnd: "none" }}
+          style={{
+            background: "#0f172a",
+            borderInlineEnd: "none",
+            marginTop: 12,
+            padding: "0 10px",
+            fontWeight: 600,
+          }}
+          className="modern-sidebar-menu"
         />
       </Sider>
 
-      <Layout>
+      <Layout style={{ background: "#f3f6fb" }}>
         <Header
           style={{
-            padding: "0 20px",
-            background: "#fff",
+            position: "sticky",
+            top: 0,
+            zIndex: 10,
+            padding: "0 22px",
+            background: "rgba(255,255,255,0.9)",
+            backdropFilter: "blur(10px)",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            borderBottom: "1px solid #eef0f2",
+            borderBottom: "1px solid rgba(148, 163, 184, 0.18)",
+            boxShadow: "0 8px 18px rgba(15, 23, 42, 0.04)",
           }}
         >
-          <button
-            aria-label="Toggle sidebar"
-            onClick={() => setCollapsed((c) => !c)}
-            className="flex h-9 w-9 items-center justify-center rounded-md text-lg text-slate-600 hover:bg-slate-100"
-          >
-            {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-          </button>
-
-          <Dropdown menu={{ items: userMenuItems }} trigger={["click"]}>
-            <button className="flex items-center gap-2 rounded-full px-2 py-1 hover:bg-slate-100">
-              <Avatar style={{ backgroundColor: "#0F766E" }} icon={<UserOutlined />} />
-              {!isMobile && (
-                <div className="text-left leading-tight">
-                  <div className="text-sm font-medium text-slate-800">
-                    {name || "Admin"}
-                  </div>
-                  <Text type="secondary" style={{ fontSize: 12 }}>
-                    {role === "SUPER_ADMIN" ? "Super Admin" : "Admin"}
-                    {email ? ` · ${email}` : ""}
-                  </Text>
-                </div>
-              )}
+          <div className="flex items-center gap-3">
+            <button
+              aria-label="Toggle sidebar"
+              onClick={() => setCollapsed((c) => !c)}
+              className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-lg text-slate-600 transition hover:border-blue-200 hover:text-blue-600"
+            >
+              {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             </button>
-          </Dropdown>
+            <div>
+              <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+                Overview
+              </div>
+              <div className="text-sm font-semibold text-slate-700">Operations Center</div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <Button
+              type="text"
+              shape="circle"
+              icon={<BellOutlined className="text-slate-600" />}
+              className="flex items-center justify-center bg-white hover:bg-blue-50 hover:text-blue-600"
+            />
+
+            <Dropdown menu={{ items: userMenuItems }} trigger={["click"]}>
+              <button className="flex items-center gap-3 rounded-full border border-slate-200 bg-white px-2 py-1.5 pr-3 shadow-sm transition hover:border-blue-200 hover:shadow-md">
+                <Avatar style={{ backgroundColor: "#2b6cf6" }} icon={<UserOutlined />} />
+                {!isMobile && (
+                  <div className="text-left leading-tight">
+                    <div className="text-sm font-semibold text-slate-800">
+                      {name || "Admin"}
+                    </div>
+                    <Text type="secondary" style={{ fontSize: 11 }}>
+                      {role === "SUPER_ADMIN" ? "Super Admin" : "Admin"}
+                      {email ? ` · ${email}` : ""}
+                    </Text>
+                  </div>
+                )}
+              </button>
+            </Dropdown>
+          </div>
         </Header>
 
-        <Content style={{ margin: "20px", minHeight: 280 }}>
-          <Outlet />
+        <Content style={{ margin: 20, minHeight: 280 }}>
+          <div className="dashboard-shell rounded-[24px] p-4 sm:p-5 lg:p-6">
+            <Outlet />
+          </div>
         </Content>
       </Layout>
     </Layout>

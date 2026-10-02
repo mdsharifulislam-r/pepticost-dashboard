@@ -11,6 +11,7 @@ import BlogPage from "@/pages/blog/BlogPage";
 import FaqPage from "@/pages/faq/FaqPage";
 import DisclaimerPage from "@/pages/disclaimer/DisclaimerPage";
 import BannerPage from "@/pages/banner/BannerPage";
+import PeptideInfoPage from "@/pages/peptideInfo/PeptideInfoPage";
 import SupportPage from "@/pages/support/SupportPage";
 import ApplicationPage from "@/pages/application/ApplicationPage";
 import ProfilePage from "@/pages/profile/ProfilePage";
@@ -36,6 +37,7 @@ export default function App() {
         <Route path="/faq" element={<FaqPage />} />
         <Route path="/disclaimer" element={<DisclaimerPage />} />
         <Route path="/banner" element={<BannerPage />} />
+        <Route path="/peptide-info" element={<PeptideInfoPage />} />
         <Route path="/support" element={<SupportPage />} />
         <Route path="/applications" element={<ApplicationPage />} />
         <Route path="/profile" element={<ProfilePage />} />

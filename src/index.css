@@ -1,5 +1,24 @@
 @import "tailwindcss";
 
+:root {
+  --app-bg: #f3f6fb;
+  --panel-bg: #ffffff;
+  --panel-soft: #f8fafc;
+  --panel-strong: #eef4ff;
+  --primary: #2b6cf6;
+  --primary-soft: #eef4ff;
+  --primary-strong: #1d4ed8;
+  --secondary: #38bdf8;
+  --success: #16a34a;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --text: #0f172a;
+  --muted: #64748b;
+  --border: rgba(15, 23, 42, 0.08);
+  --shadow-soft: 0 12px 32px rgba(15, 23, 42, 0.06);
+  --shadow-card: 0 18px 38px rgba(15, 23, 42, 0.08);
+}
+
 @layer base {
   html,
   body,
@@ -8,11 +27,210 @@
   }
 
   body {
+    margin: 0;
+    background: var(--app-bg);
+    color: var(--text);
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
   }
 }
 
-/* Ant Design table/card polish that plays nicely with Tailwind resets */
 .ant-layout {
-  background: #f4f6f8;
+  background: var(--app-bg);
+}
+
+.ant-layout-content {
+  background: var(--app-bg);
+}
+
+.ant-card,
+.ant-table-wrapper,
+.ant-modal-content,
+.ant-input,
+.ant-input-affix-wrapper,
+.ant-select-selector,
+.ant-picker,
+.ant-btn,
+.ant-upload-list-picture-card-container,
+.ant-upload-select-picture-card,
+.ant-upload-select-text {
+  border-radius: 14px !important;
+}
+
+.ant-btn {
+  box-shadow: none !important;
+  transition: all 0.2s ease;
+}
+
+.ant-btn-primary {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-strong) 100%);
+  border: none;
+  box-shadow: 0 10px 20px rgba(249, 115, 22, 0.2) !important;
+}
+
+.ant-btn-primary:hover,
+.ant-btn-primary:focus {
+  background: linear-gradient(135deg, var(--primary-strong) 0%, var(--primary) 100%);
+}
+
+.ant-btn-default {
+  background: #fff;
+  border-color: rgba(15, 23, 42, 0.08);
+}
+
+.ant-table {
+  background: transparent;
+}
+
+.ant-table-container {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--panel-bg);
+  box-shadow: var(--shadow-soft);
+}
+
+.ant-table-thead > tr > th {
+  background: #f8fafc !important;
+  color: var(--muted) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 11px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.ant-table-tbody > tr > td {
+  padding: 16px;
+  border-bottom: 1px solid var(--border) !important;
+  color: var(--text);
+}
+
+.ant-table-tbody > tr:hover > td {
+  background: rgba(249, 115, 22, 0.03) !important;
+}
+
+.ant-tag {
+  border-radius: 999px;
+  border: none;
+  font-weight: 600;
+  padding: 0 10px;
+}
+
+.ant-input,
+.ant-input-affix-wrapper,
+.ant-select-selector,
+.ant-picker,
+.ant-input-number,
+.ant-upload-list-item,
+.ant-upload-select {
+  border: 1px solid rgba(148, 163, 184, 0.26) !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+.ant-input:focus,
+.ant-input-affix-wrapper:focus,
+.ant-select-focused .ant-select-selector,
+.ant-picker-focused,
+.ant-input-number-focused {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.12) !important;
+}
+
+.ant-form-item-label > label {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.ant-modal-content {
+  border: 1px solid rgba(15, 23, 42, 0.04);
+  box-shadow: var(--shadow-card);
+}
+
+.ant-modal-header {
+  border-bottom: 1px solid var(--border);
+  padding: 20px 24px;
+}
+
+.ant-modal-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.ant-modal-body {
+  padding: 20px 24px 8px;
+}
+
+.ant-modal-footer {
+  border-top: 1px solid var(--border);
+  padding: 16px 24px 20px;
+}
+
+.ant-alert {
+  border-radius: 14px;
+}
+
+.ant-pagination-item,
+.ant-pagination-prev,
+.ant-pagination-next {
+  border-radius: 10px;
+}
+
+.ant-pagination-item-active {
+  border-color: var(--primary) !important;
+  background: var(--primary-soft) !important;
+}
+
+.ant-pagination-item-active a {
+  color: var(--primary-strong) !important;
+}
+
+.admin-page-header {
+  margin-bottom: 24px;
+  padding: 12px 0 0;
+}
+
+.admin-page-header .ant-typography h3 {
+  margin-bottom: 4px !important;
+  color: var(--text);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.admin-page-header .ant-typography {
+  color: var(--muted) !important;
+}
+
+.dashboard-shell {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.64), rgba(255, 255, 255, 0.76));
+  border: 1px solid rgba(15, 23, 42, 0.04);
+  box-shadow: var(--shadow-soft);
+}
+
+@media (max-width: 767px) {
+  .ant-layout-content {
+    padding: 12px !important;
+  }
+
+  .ant-table-container {
+    border-radius: 12px;
+  }
+
+  .ant-table-thead > tr > th,
+  .ant-table-tbody > tr > td {
+    padding: 12px 10px;
+  }
 }
